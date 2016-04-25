@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import butterknife.Bind;
@@ -17,6 +20,7 @@ import okhttp3.Response;
 public class WeatherActivity extends AppCompatActivity {
     public static final String TAG = WeatherActivity.class.getSimpleName();
     @Bind(R.id.locationNameTextView) TextView mLocationNameTextView;
+    public String responseLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +49,11 @@ public class WeatherActivity extends AppCompatActivity {
                 try {
                     String jsonData = response.body().string();
                     if (response.isSuccessful()) {
-                        Log.v(TAG, jsonData);
+
+                        Log.d(TAG, jsonData);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e(TAG, "OTHER ERROR MAN");
                 }
             }
         });

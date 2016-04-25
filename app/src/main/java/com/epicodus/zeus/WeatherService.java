@@ -1,6 +1,8 @@
 package com.epicodus.zeus;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -25,6 +27,8 @@ public class WeatherService {
         urlBuilder.addQueryParameter("appid", API_KEY);
         String url = urlBuilder.build().toString();
 
+        Log.d(TAG, "THIS IS YOUR URL:" + url);
+
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -32,4 +36,6 @@ public class WeatherService {
         Call call = client.newCall(request);
         call.enqueue(callback);
     }
+
+//    CREATE MODEL RESTAURANT THEN PROCESS RESULTS METHOD
 }
