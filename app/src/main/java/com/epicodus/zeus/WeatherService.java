@@ -1,6 +1,7 @@
 package com.epicodus.zeus;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import okhttp3.Call;
@@ -8,6 +9,7 @@ import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Guest on 4/25/16.
@@ -38,4 +40,19 @@ public class WeatherService {
     }
 
 //    CREATE MODEL RESTAURANT THEN PROCESS RESULTS METHOD
+
+    public ArrayList<Forecast> processResults(Response response) {
+        ArrayList<Forecast> forecastArray = new ArrayList<>();
+
+        try {
+
+
+        } catch {
+
+        } catch {
+
+        }
+    }
 }
+
+
