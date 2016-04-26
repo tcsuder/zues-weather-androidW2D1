@@ -34,8 +34,6 @@ public class WeatherService {
         urlBuilder.addQueryParameter("appid", API_KEY);
         String url = urlBuilder.build().toString();
 
-        Log.d(TAG, "THIS IS YOUR URL:" + url);
-
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -50,10 +48,12 @@ public class WeatherService {
         ArrayList<Forecast> forecastArray = new ArrayList<>();
 
         try {
-            String jsonData = response.body().toString();
+            String jsonData = response.body().string();
+            Log.i(TAG, "THIS IS WHAT WERE LOOKING FOR!" + jsonData);
             if (response.isSuccessful()) {
+                Log.i(TAG, "success");
                 JSONObject weatherJSON = new JSONObject(jsonData);
-                String cityName = weatherJSON.getString("name");
+
                 JSONArray forecastsJSON = weatherJSON.getJSONArray("list");
                 for (int i = 0; i < forecastsJSON.length(); i++) {
                     JSONObject forecastJSON = forecastsJSON.getJSONObject(i);
@@ -64,7 +64,7 @@ public class WeatherService {
                     Integer time = forecastJSON.getInt("dt");
                     double tempMin = tempJSON.getDouble("min");
                     double tempMax = tempJSON.getDouble("max");
-                    double humidity = forecastJSON.getDouble("temp");
+                    double humidity = forecastJSON.getDouble("humidity");
                     String weatherMain = weatherObject.getString("main");
                     String weatherDescription = weatherObject.getString("description");
                     String weatherIcon = weatherObject.getString("icon");
@@ -77,8 +77,10 @@ public class WeatherService {
                     forecastArray.add(forecast);
                 }
             }
-
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (JSONException e) {
+            Log.d(TAG, "fail");
             e.printStackTrace();
         }
         return forecastArray;
