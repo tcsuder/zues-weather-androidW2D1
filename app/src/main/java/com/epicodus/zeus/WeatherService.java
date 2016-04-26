@@ -1,6 +1,11 @@
 package com.epicodus.zeus;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -41,17 +46,42 @@ public class WeatherService {
 
 //    CREATE MODEL RESTAURANT THEN PROCESS RESULTS METHOD
 
-    public ArrayList<Forecast> processResults(Response response) {
+    public static ArrayList<Forecast> processResults(Response response) {
         ArrayList<Forecast> forecastArray = new ArrayList<>();
 
         try {
+            String jsonData = response.body().toString();
+            if (response.isSuccessful()) {
+                JSONObject weatherJSON = new JSONObject(jsonData);
+                String cityName = weatherJSON.getString("name");
+                JSONArray forecastsJSON = weatherJSON.getJSONArray("list");
+                for (int i = 0; i < forecastsJSON.length(); i++) {
+                    JSONObject forecastJSON = forecastsJSON.getJSONObject(i);
+                    JSONObject tempJSON = forecastJSON.getJSONObject("temp");
+                    JSONArray weatherArray = forecastJSON.getJSONArray("weather");
+                    JSONObject weatherObject = weatherArray.getJSONObject(0);
 
+                    Integer time = forecastJSON.getInt("dt");
+                    double tempMin = tempJSON.getDouble("min");
+                    double tempMax = tempJSON.getDouble("max");
+                    double humidity = forecastJSON.getDouble("temp");
+                    String weatherMain = weatherObject.getString("main");
+                    String weatherDescription = weatherObject.getString("description");
+                    String weatherIcon = weatherObject.getString("icon");
+                    double windSpeed = forecastJSON.getDouble("speed");
+                    double clouds = forecastJSON.getDouble("clouds");
 
-        } catch {
+                    Forecast forecast = new Forecast(time, tempMin, tempMax, humidity,
+                            weatherMain, weatherDescription, weatherIcon, windSpeed, clouds);
 
-        } catch {
+                    forecastArray.add(forecast);
+                }
+            }
 
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        return forecastArray;
     }
 }
 

@@ -14,11 +14,12 @@ public class Forecast {
     private Double mWindSpeed;
     private Double mClouds;
 
-    public Forecast(int time, double tempMin, double tempMax, double humidity, String
+    public Forecast(int time, double tempMin, double tempMax, double humidity,
+                    String
             weatherMain, String weatherDescription, String weatherIcon, double windSpeed, double
             clouds) {
 
-        String stringTime = new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util
+        String stringTime = new java.text.SimpleDateFormat("EEE MMM, d").format(new java.util
                 .Date (time * 1000));
         String iconUrl = "http://openweathermap.org/img/w/" + weatherIcon + ".png";
 
@@ -33,7 +34,6 @@ public class Forecast {
         this.mWindSpeed = windSpeed;
         this.mClouds = clouds;
     }
-
 
     public String getTime() {
         return mTime;
@@ -59,9 +59,7 @@ public class Forecast {
         return mWeatherDescription;
     }
 
-    public String getWeatherIcon() {
-        return mWeatherIcon;
-    }
+    public String getWeatherIcon() { return mWeatherIcon; }
 
     public Double getWindSpeed() {
         return mWindSpeed;
