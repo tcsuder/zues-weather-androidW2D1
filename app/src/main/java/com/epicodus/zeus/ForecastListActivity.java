@@ -8,9 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,8 +17,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class WeatherActivity extends AppCompatActivity {
-    public static final String TAG = WeatherActivity.class.getSimpleName();
+public class ForecastListActivity extends AppCompatActivity {
+    public static final String TAG = ForecastListActivity.class.getSimpleName();
     @Bind(R.id.locationNameTextView) TextView mLocationNameTextView;
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
     private ForecastListAdapter mAdapter;
@@ -47,7 +44,6 @@ public class WeatherActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "ERRORED OUT DUDE");
                 e.printStackTrace();
             }
 
@@ -55,19 +51,18 @@ public class WeatherActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 mForecastArray = WeatherService.processResults(response);
 
-                WeatherActivity.this.runOnUiThread(new Runnable() {
+                ForecastListActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter = new ForecastListAdapter(getApplicationContext(),
                                 mForecastArray);
                         mRecyclerView.setAdapter(mAdapter);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager
-                                (WeatherActivity.this);
+                                (ForecastListActivity.this);
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setHasFixedSize(true);
                     }
                 });
-                Log.d(TAG, "THIS IS A STRING THAT IS AN ARRAY" + mForecastArray.toString());
             }
         });
     }
