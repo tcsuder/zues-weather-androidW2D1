@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -61,6 +63,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         }
 
         public void bindForecast(Forecast forecast) {
+            Picasso.with(mContext).load(forecast.getWeatherIcon()).into(mWeatherIconImageView);
             mForecastDayTextView.setText(forecast.getTime());
             mWeatherMainTextView.setText(forecast.getWeatherMain());
             mWeatherDescriptionTextView.setText(forecast.getWeatherDescription());
